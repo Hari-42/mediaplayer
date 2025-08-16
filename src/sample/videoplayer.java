@@ -16,14 +16,19 @@ public class videoplayer extends Application {
     @Override
     public void start(Stage stage) {
         // path to a video in a string
-        String videoPath = "insert your own path";
+        String videoPath = "C:/Users/mshha/Videos/test.mp4";
 
         // Media und Player
         Media media = new Media(new File(videoPath).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         MediaView mediaView = new MediaView(mediaPlayer);
 
-        // buttons for controls
+        // scalable
+        mediaView.setPreserveRatio(true);
+        mediaView.setFitWidth(800);
+        mediaView.setFitHeight(600);
+
+        // Buttons
         Button playBtn = new Button("▶ Play");
         playBtn.setOnAction(e -> mediaPlayer.play());
 
@@ -49,6 +54,14 @@ public class videoplayer extends Application {
         stage.setTitle("Simple JavaFX Video Player");
         stage.setScene(scene);
         stage.show();
+
+        // video adjusts to window size
+        scene.widthProperty().addListener((obs, oldVal, newVal) -> {
+            mediaView.setFitWidth(newVal.doubleValue());
+        });
+        scene.heightProperty().addListener((obs, oldVal, newVal) -> {
+            mediaView.setFitHeight(newVal.doubleValue() - 50); // -50 für Buttons
+        });
     }
 
     public static void main(String[] args) {
