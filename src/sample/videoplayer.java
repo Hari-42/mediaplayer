@@ -7,7 +7,9 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -76,15 +78,18 @@ public class videoplayer extends Application {
             }
         });
 
-        // Layout
+        // Controls Layout
+        HBox buttonBox = new HBox(10, playBtn, pauseBtn, stopBtn);
+        buttonBox.setAlignment(Pos.CENTER); // center buttons
+        buttonBox.setPadding(new Insets(10));
+
+        VBox controlBox = new VBox(10, progressBar, buttonBox);
+        controlBox.setPadding(new Insets(10, 20, 10, 20)); // padding for both slider & buttons
+
+        // Root Layout
         BorderPane root = new BorderPane();
         root.setCenter(mediaView);
-
-        HBox controls = new HBox(10, playBtn, pauseBtn, stopBtn, progressBar);
-        controls.setSpacing(10);
-        controls.setPadding(new Insets(10, 20, 10, 20)); // top, right, bottom, left
-
-        root.setBottom(controls);
+        root.setBottom(controlBox);
 
         // Scene
         Scene scene = new Scene(root, 800, 600);
@@ -97,7 +102,7 @@ public class videoplayer extends Application {
             mediaView.setFitWidth(newVal.doubleValue());
         });
         scene.heightProperty().addListener((obs, oldVal, newVal) -> {
-            mediaView.setFitHeight(newVal.doubleValue() - 60); // adjust for controls
+            mediaView.setFitHeight(newVal.doubleValue() - 100); // adjust for controls
         });
     }
 
