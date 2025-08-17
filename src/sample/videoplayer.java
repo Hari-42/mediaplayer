@@ -14,6 +14,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color;
 
 import java.io.File;
 
@@ -50,7 +51,6 @@ public class videoplayer extends Application {
         progressBar.setMax(100);
         progressBar.setValue(0);
 
-        // allow it to grow with window size
         HBox.setHgrow(progressBar, Priority.ALWAYS);
         progressBar.setMaxWidth(Double.MAX_VALUE);
 
@@ -80,19 +80,22 @@ public class videoplayer extends Application {
 
         // Controls Layout
         HBox buttonBox = new HBox(10, playBtn, pauseBtn, stopBtn);
-        buttonBox.setAlignment(Pos.CENTER); // center buttons
+        buttonBox.setAlignment(Pos.CENTER);
         buttonBox.setPadding(new Insets(10));
 
         VBox controlBox = new VBox(10, progressBar, buttonBox);
-        controlBox.setPadding(new Insets(10, 20, 10, 20)); // padding for both slider & buttons
+        controlBox.setPadding(new Insets(10, 20, 10, 20));
 
         // Root Layout
         BorderPane root = new BorderPane();
         root.setCenter(mediaView);
         root.setBottom(controlBox);
 
+        // Set background to black
+        root.setStyle("-fx-background-color: black;");
+
         // Scene
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, 800, 600, Color.BLACK);
         stage.setTitle("Simple JavaFX Video Player");
         stage.setScene(scene);
         stage.show();
