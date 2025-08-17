@@ -35,13 +35,13 @@ public class videoplayer extends Application {
         mediaView.setFitHeight(600);
 
         // Buttons
-        Button playBtn = new Button("▶ Play");
+        Button playBtn = new Button("▶");
         playBtn.setOnAction(e -> mediaPlayer.play());
 
-        Button pauseBtn = new Button("⏸ Pause");
+        Button pauseBtn = new Button("⏸");
         pauseBtn.setOnAction(e -> mediaPlayer.pause());
 
-        Button stopBtn = new Button("⏹ Stop");
+        Button stopBtn = new Button("⏹");
         stopBtn.setOnAction(e -> mediaPlayer.stop());
 
         // Progress Slider
