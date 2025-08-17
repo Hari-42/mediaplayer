@@ -5,8 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -35,23 +33,12 @@ public class videoplayer extends Application {
         mediaView.setFitWidth(800);
         mediaView.setFitHeight(600);
 
-        // Buttons
-        Button playBtn = new Button("▶");
-        playBtn.setOnAction(e -> mediaPlayer.play());
-
-        Button pauseBtn = new Button("⏸");
-        pauseBtn.setOnAction(e -> mediaPlayer.pause());
-
-        Button stopBtn = new Button("⏹");
-        stopBtn.setOnAction(e -> mediaPlayer.stop());
-
         // Progress Slider
         Slider progressBar = new Slider();
         progressBar.setMin(0);
         progressBar.setMax(100);
         progressBar.setValue(0);
 
-        HBox.setHgrow(progressBar, Priority.ALWAYS);
         progressBar.setMaxWidth(Double.MAX_VALUE);
 
         // update progress bar as video plays
@@ -78,13 +65,22 @@ public class videoplayer extends Application {
             }
         });
 
-        // Controls Layout
-        HBox buttonBox = new HBox(10, playBtn, pauseBtn, stopBtn);
-        buttonBox.setAlignment(Pos.CENTER);
-        buttonBox.setPadding(new Insets(10));
+        // Toggle Play/Pause Button
+        Button playPauseBtn = new Button("▶"); // initial state: paused
+        playPauseBtn.setOnAction(e -> {
+            if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                mediaPlayer.pause();
+                playPauseBtn.setText("▶");
+            } else {
+                mediaPlayer.play();
+                playPauseBtn.setText("⏸");
+            }
+        });
 
-        VBox controlBox = new VBox(10, progressBar, buttonBox);
+        // Controls Layout
+        VBox controlBox = new VBox(10, progressBar, playPauseBtn);
         controlBox.setPadding(new Insets(10, 20, 10, 20));
+        controlBox.setAlignment(Pos.CENTER);
 
         // Root Layout
         BorderPane root = new BorderPane();
